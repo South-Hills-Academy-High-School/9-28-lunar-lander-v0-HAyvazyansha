@@ -1,10 +1,18 @@
 namespace SpriteKind {
     export const map = SpriteKind.create()
+    export const rocketengine = SpriteKind.create()
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.ay = -25
+})
+controller.A.onEvent(ControllerButtonEvent.Released, function () {
+    mySprite.ay = 20
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthWest0, function (sprite, location) {
     mySprite.setVelocity(0, -1)
 })
 let mySprite: Sprite = null
+let angle = 0
 tiles.setCurrentTilemap(tilemap`level1`)
 effects.blizzard.startScreenEffect()
 mySprite = sprites.create(img`
@@ -25,6 +33,10 @@ mySprite = sprites.create(img`
     . . . 2 2 e e 4 4 4 2 e e . . . 
     . . . . . 2 2 e e e e . . . . . 
     `, SpriteKind.Player)
+let mySprite3 = sprites.create(img`
+    7 3 
+    3 7 
+    `, SpriteKind.rocketengine)
 scene.cameraFollowSprite(mySprite)
 scaling.scaleByPercent(mySprite, -25, ScaleDirection.Uniformly, ScaleAnchor.Middle)
 mySprite.ay = 20
@@ -36,4 +48,5 @@ game.onUpdate(function () {
     minimap.includeSprite(myMinimap, mySprite)
     mySprite2 = sprites.create(minimap.getImage(myMinimap), SpriteKind.map)
     mySprite2.setPosition(mySprite.left, mySprite.top)
+    mySprite3.setPosition(mySprite.x, mySprite.y)
 })
